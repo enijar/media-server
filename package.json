@@ -1,7 +1,7 @@
 {
-  "name": "MediaServer",
+  "name": "media-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Media server for searching and streaming magnet URIs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "magnet-uri": "^5.2.4",
-    "superagent": "^5.0.0"
+    "superagent": "^5.0.0",
+    "webtorrent": "^0.103.1"
   }
 }
