@@ -2,7 +2,6 @@
   "name": "media-server",
   "version": "1.0.0",
   "description": "Media server for searching and streaming magnet URIs",
-  "main": "index.js",
   "scripts": {
     "start": "node src/server",
     "watch": "npx webpack --progress --hide-modules --watch --mode development",
