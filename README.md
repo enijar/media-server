@@ -4,7 +4,13 @@ Media server for searching and streaming magnet URIs
 
 ### Getting Started
 
-Using [Docker](https://docs.docker.com/install/), run:
+Setup ENV_VARS
+
+```bash
+cp .env.example .env
+```
+
+Using [Docker](https://docs.docker.com/install/)
 
 ```bash
 docker-compose up
