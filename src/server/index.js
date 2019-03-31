@@ -1,11 +1,15 @@
-const services = require('./services/index');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-(async () => {
-  const query = 'Harry Potter';
-  const magnets = await services.searchEndpoints(query);
+const app = express();
 
-  for (let i = 0; i < magnets.length; i++) {
-    const {name, uri} = services.parseMagnetURI(magnets[i]);
-    console.log(name, uri);
-  }
-})();
+app.use(bodyParser.json());
+app.use(express.static(path.resolve(__dirname, '..', '..', 'public')));
+app.use(bodyParser.urlencoded({extended: true}));
+
+require('./routes')(app);
+
+app.listen(3000, () => {
+  console.log(`Running http://localhost:3000`);
+});
