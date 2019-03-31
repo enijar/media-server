@@ -10,7 +10,7 @@ Setup ENV_VARS
 cp .env.example .env
 ```
 
-Using [Docker](https://docs.docker.com/install/)
+Start [Docker](https://docs.docker.com/install/) container
 
 ```bash
 docker-compose up
