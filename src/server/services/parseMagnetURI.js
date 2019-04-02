@@ -12,6 +12,10 @@ module.exports = uri => {
     throw new Error('No uri passed to parseMagnetURI service');
   }
 
-  const {name} = parseMagnetURI.decode(uri);
-  return {name, uri};
+  const parsed = parseMagnetURI.decode(uri);
+  parsed.uri = uri;
+
+  console.log('parsed', parsed);
+
+  return parsed;
 }

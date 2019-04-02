@@ -4,6 +4,7 @@
   "description": "Media server for searching and streaming magnet URIs",
   "scripts": {
     "start": "node src/server",
+    "server-watch": "npx nodemon --ignore src/client src/server",
     "watch": "npx webpack --progress --hide-modules --watch --mode development",
     "build": "npx webpack --progress --hide-modules --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,12 +15,16 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "magnet-to-torrent": "^1.0.7",
     "magnet-uri": "^5.2.4",
+    "parse-torrent": "^6.1.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "superagent": "^5.0.0",
-    "webtorrent": "^0.103.1"
+    "torrent-search-api": "^2.0.6",
+    "webtorrent": "^0.103.1",
+    "webtorrent-cli": "^1.12.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -42,8 +47,10 @@
     "file-loader": "^2.0.0",
     "html-loader": "^0.5.5",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.18.10",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.6.2",
+    "regenerator-runtime": "^0.13.2",
     "sass-loader": "^7.1.0",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",

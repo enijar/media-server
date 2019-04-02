@@ -6,3 +6,26 @@
 @import "Partials/Utils";
 @import "Components/Screen";
 @import "Screens/Home";
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 75vw;
+  margin-left: auto;
+  margin-right: auto;
+
+  &-item {
+    width: 16.666666666666668%;
+    padding: 0.3em;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+}
