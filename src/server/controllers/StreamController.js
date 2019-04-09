@@ -3,12 +3,13 @@ const WebTorrent = require('webtorrent');
 const client = new WebTorrent();
 let server = null;
 let index = 0;
+let hash = Date.now();
 
 module.exports = async (req, res) => {
     const torrent = client.get(req.body.magnet);
 
     if (torrent) {
-        return res.send({url: `http://localhost:9000/${index}`});
+        return res.send({url: `http://localhost:9000/${index}?hash=${hash}`});
     }
 
     if (server) {
@@ -25,6 +26,7 @@ module.exports = async (req, res) => {
 
         server = torrent.createServer();
         server.listen(9000);
-        return res.send({url: `http://localhost:9000/${index}`});
+        hash = Date.now();
+        return res.send({url: `http://localhost:9000/${index}?hash=${hash}`});
     });
 };
