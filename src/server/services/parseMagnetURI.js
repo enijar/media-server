@@ -15,7 +15,5 @@ module.exports = uri => {
     const parsed = parseMagnetURI.decode(uri);
     parsed.uri = uri;
 
-    console.log('parsed', parsed);
-
     return parsed;
 };
