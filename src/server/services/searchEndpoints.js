@@ -30,4 +30,4 @@ module.exports = query => {
             return resolve(magnets || []);
         });
     });
-}
+};

@@ -2,15 +2,13 @@ import React from "react";
 import AppContext from "../app/Context/App";
 import BaseScreen from "./BaseScreen";
 import Screen from "../Components/Screen";
-
-const API_KEY = '51421ce3f49d256ef63b70b3beeb7792';
-const API_ENDPOINT = 'https://api.themoviedb.org/3';
-const ASSET_ENDPOINT = 'https://image.tmdb.org/t/p/w500';
+import services from "../services/index";
+import config from "../../../config/client";
 
 @AppContext
 export default class HomeScreen extends BaseScreen {
     state = {
-        popular: [],
+        featured: [],
         results: [],
         showResults: false,
         submitting: false,
@@ -18,9 +16,8 @@ export default class HomeScreen extends BaseScreen {
     };
 
     async componentDidMount() {
-        let res = await fetch(`${API_ENDPOINT}/trending/movie/week?api_key=${API_KEY}`);
-        res = await res.json();
-        this.setState({popular: res.results});
+        const res = await services.api.get('/api/movie/featured');
+        this.setState({featured: res.body.results});
     }
 
     handleSubmit = async event => {
@@ -29,8 +26,7 @@ export default class HomeScreen extends BaseScreen {
             return;
         }
         await this.setState({submitting: true});
-        let res = await fetch(`${API_ENDPOINT}/search/movie?api_key=${API_KEY}&language=en-US&query=${this.state.query}&page=1&include_adult=false`);
-        res = await res.json();
+        const res = await services.api.post('/api/movie/search', {query: this.state.query});
         this.setState({submitting: false, showResults: true, results: res.results});
     };
 
@@ -52,7 +48,7 @@ export default class HomeScreen extends BaseScreen {
                     <div className="grid">
                         {this.state.results.filter(item => item.poster_path && item.original_language === 'en').map((item, index) => (
                             <div key={`result-${index}`} className="grid-item">
-                                <img src={`${ASSET_ENDPOINT}/${item.poster_path}`}/>
+                                <img src={`${config.assentEndpoint}/${item.poster_path}`}/>
                                 <p>{item.title}</p>
                                 <p>Rating: {item.vote_average}</p>
                             </div>
@@ -62,9 +58,9 @@ export default class HomeScreen extends BaseScreen {
 
                 {!this.state.showResults && (
                     <div className="grid">
-                        {this.state.popular.map((item, index) => (
-                            <div key={`popular-${index}`} className="grid-item">
-                                <img src={`${ASSET_ENDPOINT}/${item.poster_path}`}/>
+                        {this.state.featured.map((item, index) => (
+                            <div key={`featured-${index}`} className="grid-item">
+                                <img src={`${config.assentEndpoint}/${item.poster_path}`}/>
                                 <p>{item.title}</p>
                                 <p>Rating: {item.vote_average}</p>
                             </div>

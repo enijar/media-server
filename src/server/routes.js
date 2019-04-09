@@ -1,4 +1,5 @@
 module.exports = app => {
-    app.post('/search', require('./controllers/SearchController'));
+    app.get('/api/movie/featured', require('./controllers/MovieFeaturedController'));
+    app.post('/api/movie/search', require('./controllers/MovieSearchController'));
     app.get('*', require('./controllers/AppController'));
-}
+};

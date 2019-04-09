@@ -18,4 +18,4 @@ module.exports = uri => {
     console.log('parsed', parsed);
 
     return parsed;
-}
+};

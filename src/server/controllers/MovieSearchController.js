@@ -9,4 +9,4 @@ module.exports = async (req, res) => {
     const results = magnets.map(services.parseMagnetURI);
 
     res.send({results});
-}
+};
