@@ -25,6 +25,8 @@ services:
     environment:
       - APP_ENV=${APP_ENV:-production}
     command: ./bin/run.sh
+    ports:
+      - 9000:9000
 
   nginx:
     image: 'nginx:latest'

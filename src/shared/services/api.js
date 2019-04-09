@@ -19,6 +19,6 @@ const sendRequest = ({endpoint, method, data = {}}) => new Promise(resolve => {
 });
 
 module.exports = {
-    get: endpoint => sendRequest({endpoint, method: 'get'}),
-    post: endpoint => sendRequest({endpoint, method: 'post'}),
+    get: (endpoint, data) => sendRequest({endpoint, method: 'get', data}),
+    post: (endpoint, data) => sendRequest({endpoint, method: 'post', data}),
 };
