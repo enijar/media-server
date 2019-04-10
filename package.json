@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.3",
     "express": "^4.16.4",
     "magnet-to-torrent": "^1.0.7",
     "magnet-uri": "^5.2.4",
