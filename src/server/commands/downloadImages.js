@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const request = require('superagent');
 const _ = require('lodash');
-const urls = require('../../../storage/urls');
+const urls = require('../../../storage/data/urls');
 
 const BATCH_SIZE = 30;
 
@@ -15,12 +15,12 @@ const BATCH_SIZE = 30;
 
         const requests = chunks[i].map(url => new Promise(resolve => {
             request.get(url.img).send().end((err, res) => {
-                if (err) {
+                if (err || !res) {
                     resolve(null);
-                    return console.error(err);
+                    return console.error(`Failed to download image "${url.img}"`);
                 }
 
-                fs.writeFileSync(path.join(storagePath, `${url.id}.jpg`), res.body, 'utf8');
+                fs.writeFileSync(path.join(storagePath, 'images', `${url.id}.jpg`), res.body, 'utf8');
                 resolve(url.id);
             });
         }));

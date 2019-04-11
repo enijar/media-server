@@ -16,7 +16,7 @@ const sendRequest = url => new Promise((resolve, reject) => {
 });
 
 const storeMovies = (movies = []) => {
-    const moviesFile = path.resolve(__dirname, '..', '..', '..', 'storage', 'movies.json');
+    const moviesFile = path.resolve(__dirname, '..', '..', '..', 'storage', 'data', 'movies.json');
     let storedMovies = [];
 
     if (fs.existsSync(moviesFile)) {
