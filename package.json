@@ -18,6 +18,7 @@
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "magnet-to-torrent": "^1.0.7",
     "magnet-uri": "^5.2.4",
     "parse-torrent": "^6.1.2",

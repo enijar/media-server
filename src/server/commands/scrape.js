@@ -40,7 +40,7 @@ const getMovieDetails = async link => {
     }
 };
 
-(async function getMovies(page = 1) {
+(async function scrape(page = 1) {
     try {
         console.log(`Getting movies from page ${page}...`);
 
@@ -93,5 +93,5 @@ const getMovieDetails = async link => {
         console.error(err.message);
     }
 
-    return setTimeout(() => getMovies(++page), PAGE_INTERVAL);
+    return setTimeout(() => scrape(++page), PAGE_INTERVAL);
 })();
