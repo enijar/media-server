@@ -6,4 +6,5 @@ module.exports = {
     searchEndpoints: require('./searchEndpoints'),
     parseMagnetURI: require('./parseMagnetURI'),
     cache: require('./cache'),
+    db: require('./db'),
 };

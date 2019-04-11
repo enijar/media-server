@@ -1,18 +1,16 @@
-const services = require('../services');
+const Sequelize = require('sequelize');
+const Movie = require('../models/Movie');
 
 module.exports = async (req, res) => {
     if (!req.body.query) {
         return res.send({errors: ['Missing query parameter']});
     }
 
-    if (services.cache.has(`api.movie.search.${req.body.query}`)) {
-        return res.send({results: services.cache.get(`api.movie.search.${req.body.query}`)});
+    try {
+        const results = await Movie.findAll({where: {title: {[Sequelize.Op.like]: `%${req.body.query}%`}}});
+        res.send(results);
+    } catch (err) {
+        console.error(err);
+        return res.send({errors: ['Server error, try again later']});
     }
-
-    const magnets = await services.searchEndpoints(req.body.query);
-    const results = magnets.map(services.parseMagnetURI);
-
-    services.cache.set(`api.movie.search.${req.body.query}`, results);
-
-    res.send({results});
 };
