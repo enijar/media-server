@@ -8,15 +8,11 @@ module.exports = async (req, res) => {
 
     try {
         const results = await Movie.findAll({
-            where: Sequelize.literal('MATCH (title) AGAINST (:title)'),
-            replacements: {
-                title: req.body.query,
+            where: {
+                title: {
+                    [Sequelize.Op.like]: `%${req.body.query}%`
+                }
             },
-            // where: {
-            //     title: {
-            //         [Sequelize.Op.like]: `%${req.body.query}%`
-            //     }
-            // },
             order: [
                 ['year', 'desc'],
             ],
