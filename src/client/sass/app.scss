@@ -5,6 +5,7 @@
 @import "Partials/Layout";
 @import "Partials/Utils";
 @import "Components/Screen";
+@import "Components/Search";
 @import "Screens/Home";
 
 .grid {
@@ -16,7 +17,10 @@
   margin-right: auto;
 
   &-item {
-    width: 16.666666666666668%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 25%;
     padding: 0.3em;
 
     img {

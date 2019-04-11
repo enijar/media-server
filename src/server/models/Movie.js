@@ -8,7 +8,7 @@ module.exports = class Movie extends Sequelize.Model {
                     type: DataTypes.STRING,
                 },
                 title: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.TEXT,
                 },
                 year: {
                     type: DataTypes.FLOAT,

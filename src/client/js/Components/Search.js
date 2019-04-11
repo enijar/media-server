@@ -29,6 +29,7 @@ export default class Search extends Component {
                     name="query"
                     value={this.state.query}
                     onChange={this.handleChange}
+                    placeholder="Enter a movie title..."
                 />
             </div>
         );
