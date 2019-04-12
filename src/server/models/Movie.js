@@ -11,10 +11,10 @@ module.exports = class Movie extends Sequelize.Model {
                     type: DataTypes.TEXT,
                 },
                 year: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.STRING,
                 },
                 rating: {
-                    type: DataTypes.FLOAT,
+                    type: DataTypes.STRING,
                 },
                 genres: {
                     type: DataTypes.JSON,
@@ -22,8 +22,23 @@ module.exports = class Movie extends Sequelize.Model {
                 link: {
                     type: DataTypes.STRING,
                 },
-                magnet: {
-                    type: DataTypes.TEXT,
+                hash: {
+                    type: DataTypes.STRING,
+                },
+                seeds: {
+                    type: DataTypes.STRING,
+                },
+                peers: {
+                    type: DataTypes.STRING,
+                },
+                size: {
+                    type: DataTypes.STRING,
+                },
+                uploaded_at: {
+                    type: DataTypes.STRING,
+                },
+                type: {
+                    type: DataTypes.STRING,
                 },
                 imdb: {
                     type: DataTypes.STRING,

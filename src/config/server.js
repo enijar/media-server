@@ -16,5 +16,6 @@ module.exports = {
         password: process.env.DB_PASSWORD,
     },
     proxyHost: process.env.PROXY_HOST,
+    cdnHost: 'https://img.yts.am',
     scraperInterval: 5000,
 };

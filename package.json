@@ -23,6 +23,7 @@
     "magnet-to-torrent": "^1.0.7",
     "magnet-uri": "^5.2.4",
     "mysql2": "^1.6.5",
+    "node-fetch": "^2.3.0",
     "parse-torrent": "^6.1.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
