@@ -5,14 +5,14 @@ const config = require('../../config/server');
 const Movie = require('../models/Movie');
 
 const STATE = {
-    nextPage: 1,
+    page: 1,
     failedPages: [],
 };
 
-async function updateMovies() {
-    const page = STATE.nextPage;
+const WORKERS = 20;
+
+async function updateMovies(page = 1) {
     const endpoint = `${config.proxyHost}/api/v2/list_movies.json?page=${page}`;
-    STATE.nextPage++;
 
     console.log(`Fetching movies from endpoint ${endpoint}...`);
 
@@ -65,14 +65,15 @@ async function updateMovies() {
         STATE.failedPages.push(page);
         console.error(`Error fetching movies from endpoint ${endpoint}: ${err.message}`);
     }
-
-    await Promise.all(work());
 }
 
-function work() {
-    return Array.from({length: 20}).map(updateMovies);
-}
+(async function work() {
+    const processes = [];
+    for (let i = 0; i < WORKERS; i++) {
+        processes.push(updateMovies(STATE.page));
+        STATE.page++;
+    }
 
-(async () => {
-    await Promise.all(work());
+    await Promise.all(processes);
+    return work();
 })();
