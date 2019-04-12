@@ -1,5 +1,4 @@
 const path = require('path');
-require('dotenv').config({path: path.resolve(__dirname, '..', '..', '.env')});
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -11,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 require('./routes')(app);
 
-require('./services/index').db.sync();
+require('./bootstrap');
 
 app.listen(3000, () => {
     console.log(`Running http://localhost:3000`);

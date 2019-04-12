@@ -1,14 +1,29 @@
+require('../bootstrap');
 const path = require('path');
 const fs = require('fs');
+const Sequelize = require('sequelize');
 const request = require('superagent');
 const _ = require('lodash');
-const urls = require('../../../storage/data/urls');
+const Movie = require('../models/Movie');
 
 const BATCH_SIZE = 30;
 
 (async function downloadImage() {
     const storagePath = path.resolve(__dirname, '..', '..', '..', 'storage');
-    const chunks = _.chunk(urls, BATCH_SIZE);
+    const files = fs.readdirSync(path.join(storagePath, 'images'));
+    const ids = files
+        .filter(file => !file.startsWith('.'))
+        .map(file => parseInt(file.replace(/\.jpg$/, ''))).sort();
+
+    const moviesWithoutImages = await Movie.findAll({
+        where: {
+            id: {
+                [Sequelize.Op.notIn]: ids,
+            },
+        },
+    });
+
+    const chunks = _.chunk(moviesWithoutImages, BATCH_SIZE);
 
     for (let i = 0; i < chunks.length; i++) {
         console.log(`Processing urls with IDs ${chunks[i].map(url => url.id).join(',')}...`);

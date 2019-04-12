@@ -1,8 +1,8 @@
-const path = require('path');
-const fs = require('fs');
+require('../bootstrap');
 const request = require('superagent');
 const cheerio = require('cheerio');
 const config = require('../../config/server');
+const Movie = require('../models/Movie');
 
 const sendRequest = url => new Promise((resolve, reject) => {
     request.get(url).send().end((err, res) => {
@@ -13,15 +13,26 @@ const sendRequest = url => new Promise((resolve, reject) => {
     });
 });
 
-const storeMovies = (movies = []) => {
-    const moviesFile = path.resolve(__dirname, '..', '..', '..', 'storage', 'data', 'movies.json');
-    let storedMovies = [];
+const storeMovies = async (movies = []) => {
+    try {
+        const existingMovies = await Movie.findAll({
+            where: {
+                title: movies.map(movie => movie.title),
+            },
+        });
 
-    if (fs.existsSync(moviesFile)) {
-        storedMovies = JSON.parse(fs.readFileSync(moviesFile, 'utf8')) || [];
+        const existingMovieTitles = existingMovies.map(movie => movie.title);
+        movies = movies.filter(movie => !existingMovieTitles.includes(movie.title));
+
+        await Movie.bulkCreate(movies);
+
+        if (existingMovies.length > 0) {
+            console.log('Finished because of duplicate movies');
+            process.exit(0);
+        }
+    } catch (err) {
+        console.error(err);
     }
-
-    fs.writeFileSync(moviesFile, JSON.stringify(storedMovies.concat(movies)), 'utf8');
 };
 
 const getMovieDetails = async link => {
