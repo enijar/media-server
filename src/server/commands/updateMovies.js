@@ -7,7 +7,7 @@ const Movie = require('../models/Movie');
 (async function updateMovies(page = 1) {
     const endpoint = `${config.proxyHost}/api/v2/list_movies.json?page=${page}`;
 
-    console.log(`Fetching movies from endpoint ${endpoint}`);
+    console.log(`Fetching movies from endpoint ${endpoint}...`);
 
     try {
         const res = await fetch(endpoint);
@@ -43,7 +43,7 @@ const Movie = require('../models/Movie');
 
         await Movie.bulkCreate(movies);
     } catch (err) {
-        console.error(err.message);
+        console.error(`Error fetching movies from endpoint ${endpoint}: ${err.message}`);
     }
 
     return updateMovies(++page);
