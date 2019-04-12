@@ -97,7 +97,7 @@ const getMovieDetails = async link => {
             movies[i] = Object.assign(movies[i], movieDetails[i]);
         }
 
-        storeMovies(movies);
+        await storeMovies(movies);
     } catch (err) {
         console.error(err.message);
     }

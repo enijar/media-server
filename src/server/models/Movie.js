@@ -16,17 +16,14 @@ module.exports = class Movie extends Sequelize.Model {
                 rating: {
                     type: DataTypes.FLOAT,
                 },
-                genres_0: {
-                    type: DataTypes.STRING,
-                },
-                genres_1: {
-                    type: DataTypes.STRING,
+                genres: {
+                    type: DataTypes.JSON,
                 },
                 link: {
                     type: DataTypes.STRING,
                 },
                 magnet: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.TEXT,
                 },
                 imdb: {
                     type: DataTypes.STRING,
