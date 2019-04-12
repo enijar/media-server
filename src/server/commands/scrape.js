@@ -4,9 +4,6 @@ const request = require('superagent');
 const cheerio = require('cheerio');
 const config = require('../../config/server');
 
-const HOST = config.proxyHost;
-const PAGE_INTERVAL = 5000;
-
 const sendRequest = url => new Promise((resolve, reject) => {
     request.get(url).send().end((err, res) => {
         if (err) {
@@ -45,7 +42,7 @@ const getMovieDetails = async link => {
     try {
         console.log(`Getting movies from page ${page}...`);
 
-        const res = await sendRequest(`${HOST}/browse-movies?page=${page}`);
+        const res = await sendRequest(`${config.proxyHost}/browse-movies?page=${page}`);
         const $ = cheerio.load(res);
 
         // Stop if there is no next page
@@ -59,7 +56,7 @@ const getMovieDetails = async link => {
             const titleElement = $(this).find('.browse-movie-title');
             const img = $(this).find('figure > img').attr('src');
             const title = titleElement.text();
-            const link = titleElement.attr('href').replace('https://yts.am', HOST);
+            const link = titleElement.attr('href').replace('https://yts.am', config.proxyHost);
             const year = parseInt($(this).find('.browse-movie-year').text());
             const rating = parseFloat($(this).find('h4.rating').text().replace(/\s+/g, '').replace('/10', ''));
             const genres = [];
@@ -94,5 +91,5 @@ const getMovieDetails = async link => {
         console.error(err.message);
     }
 
-    return setTimeout(() => scrape(++page), PAGE_INTERVAL);
+    return setTimeout(() => scrape(++page), config.scraperInterval);
 })();

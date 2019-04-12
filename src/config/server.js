@@ -14,4 +14,5 @@ module.exports = {
         password: process.env.DB_PASSWORD,
     },
     proxyHost: process.env.PROXY_HOST,
+    scraperInterval: 5000,
 };
