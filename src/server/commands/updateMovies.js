@@ -4,8 +4,15 @@ const _ = require('lodash');
 const config = require('../../config/server');
 const Movie = require('../models/Movie');
 
-(async function updateMovies(page = 1) {
+const STATE = {
+    nextPage: 1,
+    failedPages: [],
+};
+
+async function updateMovies() {
+    const page = STATE.nextPage;
     const endpoint = `${config.proxyHost}/api/v2/list_movies.json?page=${page}`;
+    STATE.nextPage++;
 
     console.log(`Fetching movies from endpoint ${endpoint}...`);
 
@@ -25,6 +32,13 @@ const Movie = require('../models/Movie');
                 year: _.get(movie, 'year', null),
                 rating: _.get(movie, 'rating', null),
                 genres: _.get(movie, 'genres', null),
+                summary: _.get(movie, 'summary', null),
+                summary_full: _.get(movie, 'summary_full', null),
+                description_full: _.get(movie, 'description_full', null),
+                synopsis: _.get(movie, 'synopsis', null),
+                language: _.get(movie, 'language', null),
+                runtime: _.get(movie, 'runtime', null),
+                certificate: _.get(movie, 'mpa_rating', null),
                 link: _.get(movie, 'url', '').replace('https://yts.am', config.proxyHost),
                 hash: _.get(torrent, 'hash', null),
                 seeds: _.get(torrent, 'seeds', 0),
@@ -38,13 +52,27 @@ const Movie = require('../models/Movie');
 
         if (movies.length === 0) {
             console.log('Movies updated');
+
+            if (STATE.failedPages.length > 0) {
+                console.error(`Failed to fetch ${STATE.failedPages.length} pages: ${STATE.failedPages.join(',')}`);
+            }
+
             process.exit(0);
         }
 
         await Movie.bulkCreate(movies);
     } catch (err) {
+        STATE.failedPages.push(page);
         console.error(`Error fetching movies from endpoint ${endpoint}: ${err.message}`);
     }
 
-    return updateMovies(++page);
+    await Promise.all(work());
+}
+
+function work() {
+    return Array.from({length: 20}).map(updateMovies);
+}
+
+(async () => {
+    await Promise.all(work());
 })();
