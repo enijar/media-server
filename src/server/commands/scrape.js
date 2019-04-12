@@ -2,8 +2,9 @@ const path = require('path');
 const fs = require('fs');
 const request = require('superagent');
 const cheerio = require('cheerio');
+const config = require('../../config/server');
 
-const HOST = 'https://afidian.com';
+const HOST = config.proxyHost;
 const PAGE_INTERVAL = 5000;
 
 const sendRequest = url => new Promise((resolve, reject) => {
