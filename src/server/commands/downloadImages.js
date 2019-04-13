@@ -10,8 +10,8 @@ const BATCH_SIZE = 30;
 const FAILED_IDS = [];
 
 (async function downloadImage() {
-    const storagePath = path.resolve(__dirname, '..', '..', '..', 'storage');
-    const files = fs.readdirSync(path.join(storagePath, 'images'));
+    const publicPath = path.resolve(__dirname, '..', '..', '..', 'public');
+    const files = fs.readdirSync(path.join(publicPath, 'images'));
     const ids = files
         .filter(file => !file.startsWith('.'))
         .map(file => parseInt(file.replace(/\.jpg$/, ''))).sort();
@@ -37,7 +37,7 @@ const FAILED_IDS = [];
                     return console.error(`Failed to download image "${url.img}"`);
                 }
 
-                fs.writeFileSync(path.join(storagePath, 'images', `${url.id}.jpg`), res.body, 'utf8');
+                fs.writeFileSync(path.join(publicPath, 'images', `${url.id}.jpg`), res.body, 'utf8');
                 resolve(url.id);
             });
         }));
