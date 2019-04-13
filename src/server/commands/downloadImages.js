@@ -24,6 +24,11 @@ const FAILED_IDS = [];
         },
     });
 
+    if (moviesWithoutImages.length === 0) {
+        console.log('All movies have images');
+        process.exit(0);
+    }
+
     const chunks = _.chunk(moviesWithoutImages, BATCH_SIZE);
 
     for (let i = 0; i < chunks.length; i++) {
@@ -50,4 +55,6 @@ const FAILED_IDS = [];
     }
 
     console.log('Finished downloading images');
+
+    process.exit(0);
 })();
