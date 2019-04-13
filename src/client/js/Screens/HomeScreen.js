@@ -11,9 +11,13 @@ export default class HomeScreen extends BaseScreen {
     state = {
         results: null,
         page: 1,
+        query: '',
     };
 
-    handleResults = results => this.setState({results});
+    handleResults = results => {
+        results.page = results.query !== this.state.query ? 1 : results.page;
+        this.setState({results, query: results.query});
+    };
 
     changePage = page => this.setState({page});
 
@@ -40,15 +44,15 @@ export default class HomeScreen extends BaseScreen {
                     </div>
                 )}
 
-                <div className="grid">
-                    {this.state.results && (
+                {get(this.state.results, 'totalPages', 0) > 1 && (
+                    <div className="grid">
                         <Pagination
                             page={this.state.results.page}
                             totalPages={this.state.results.totalPages}
                             onChange={this.changePage}
                         />
-                    )}
-                </div>
+                    </div>
+                )}
             </Screen>
         );
     }

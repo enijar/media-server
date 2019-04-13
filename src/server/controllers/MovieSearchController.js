@@ -24,6 +24,7 @@ module.exports = async (req, res) => {
             offset: (page - 1) * PER_PAGE,
         });
         res.send({
+            query: req.body.query,
             total: results.count,
             totalPages: Math.ceil(results.count / PER_PAGE),
             page,
