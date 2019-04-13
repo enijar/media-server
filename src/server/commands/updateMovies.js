@@ -12,7 +12,7 @@ const STATE = {
 const WORKERS = 20;
 
 async function updateMovies(page = 1) {
-    const endpoint = `${config.proxyHost}/api/v2/list_movies.json?page=${page}`;
+    const endpoint = `https://yts.am/api/v2/list_movies.json?page=${page}`;
 
     console.log(`Fetching movies from endpoint ${endpoint}...`);
 
@@ -39,14 +39,14 @@ async function updateMovies(page = 1) {
                 language: _.get(movie, 'language', null),
                 runtime: _.get(movie, 'runtime', null),
                 certificate: _.get(movie, 'mpa_rating', null),
-                link: _.get(movie, 'url', '').replace('https://yts.am', config.proxyHost),
+                link: _.get(movie, 'url', ''),
                 hash: _.get(torrent, 'hash', null),
                 seeds: _.get(torrent, 'seeds', 0),
                 peers: _.get(torrent, 'peers', 0),
                 size: _.get(torrent, 'size', 0),
-                uploaded_at: _.get(torrent, 'date_uploaded', null),
                 type: _.get(torrent, 'type', null),
                 imdb: `https://www.imdb.com/title/${_.get(movie, 'imdb_code', '')}`,
+                uploaded_at: _.get(torrent, 'date_uploaded', null),
             };
         }).filter(movie => movie !== null);
 

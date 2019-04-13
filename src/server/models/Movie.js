@@ -19,6 +19,27 @@ module.exports = class Movie extends Sequelize.Model {
                 genres: {
                     type: DataTypes.JSON,
                 },
+                summary: {
+                    type: DataTypes.STRING,
+                },
+                summary_full: {
+                    type: DataTypes.STRING,
+                },
+                description_full: {
+                    type: DataTypes.STRING,
+                },
+                synopsis: {
+                    type: DataTypes.STRING,
+                },
+                language: {
+                    type: DataTypes.STRING,
+                },
+                runtime: {
+                    type: DataTypes.STRING,
+                },
+                certificate: {
+                    type: DataTypes.STRING,
+                },
                 link: {
                     type: DataTypes.STRING,
                 },
@@ -34,13 +55,13 @@ module.exports = class Movie extends Sequelize.Model {
                 size: {
                     type: DataTypes.STRING,
                 },
-                uploaded_at: {
-                    type: DataTypes.STRING,
-                },
                 type: {
                     type: DataTypes.STRING,
                 },
                 imdb: {
+                    type: DataTypes.STRING,
+                },
+                uploaded_at: {
                     type: DataTypes.STRING,
                 },
             },
