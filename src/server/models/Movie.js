@@ -11,7 +11,7 @@ module.exports = class Movie extends Sequelize.Model {
                     type: DataTypes.TEXT,
                 },
                 year: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.FLOAT,
                 },
                 rating: {
                     type: DataTypes.STRING,
@@ -20,16 +20,13 @@ module.exports = class Movie extends Sequelize.Model {
                     type: DataTypes.JSON,
                 },
                 summary: {
-                    type: DataTypes.STRING,
-                },
-                summary_full: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.TEXT,
                 },
                 description_full: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.TEXT,
                 },
                 synopsis: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.TEXT,
                 },
                 language: {
                     type: DataTypes.STRING,
@@ -47,10 +44,10 @@ module.exports = class Movie extends Sequelize.Model {
                     type: DataTypes.STRING,
                 },
                 seeds: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.FLOAT,
                 },
                 peers: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.FLOAT,
                 },
                 size: {
                     type: DataTypes.STRING,

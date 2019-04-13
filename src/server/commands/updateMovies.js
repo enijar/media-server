@@ -4,6 +4,9 @@ const _ = require('lodash');
 const config = require('../../config/server');
 const Movie = require('../models/Movie');
 
+// @note you will most likely need a VPN for this to run without
+// being blocked by your ISP. I suggest https://nordvpn.com
+
 const STATE = {
     page: 1,
     failedPages: [],
@@ -12,7 +15,7 @@ const STATE = {
 const WORKERS = 20;
 
 async function updateMovies(page = 1) {
-    const endpoint = `https://yts.am/api/v2/list_movies.json?page=${page}`;
+    const endpoint = `https://yts.am/api/v2/list_movies.json?page=${page}&limit=50`;
 
     console.log(`Fetching movies from endpoint ${endpoint}...`);
 
@@ -33,7 +36,6 @@ async function updateMovies(page = 1) {
                 rating: _.get(movie, 'rating', null),
                 genres: _.get(movie, 'genres', null),
                 summary: _.get(movie, 'summary', null),
-                summary_full: _.get(movie, 'summary_full', null),
                 description_full: _.get(movie, 'description_full', null),
                 synopsis: _.get(movie, 'synopsis', null),
                 language: _.get(movie, 'language', null),
