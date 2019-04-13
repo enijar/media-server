@@ -7,6 +7,7 @@ const _ = require('lodash');
 const Movie = require('../models/Movie');
 
 const BATCH_SIZE = 30;
+const FAILED_IDS = [];
 
 (async function downloadImage() {
     const storagePath = path.resolve(__dirname, '..', '..', '..', 'storage');
@@ -32,6 +33,7 @@ const BATCH_SIZE = 30;
             request.get(url.img).send().end((err, res) => {
                 if (err || !res) {
                     resolve(null);
+                    FAILED_IDS.push(url.id);
                     return console.error(`Failed to download image "${url.img}"`);
                 }
 
@@ -42,4 +44,10 @@ const BATCH_SIZE = 30;
 
         await Promise.all(requests);
     }
+
+    if (FAILED_IDS.length > 0) {
+        console.log(`Failed to download some images, ${FAILED_IDS.join(',')}`);
+    }
+
+    console.log('Finished downloading images');
 })();
