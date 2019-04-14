@@ -21,9 +21,11 @@ export default class WatchScreen extends BaseScreen {
         const movie = (await services.api.get(`/api/movie/${this.props.match.params.id}`)).body;
         const magnet = services.magnet.get(movie);
 
+        console.log(magnet);
+
         this.setState({movie});
 
-        const res = await services.api.post('/api/stream', {magnet});
+        const res = await services.api.get(`/api/stream/${movie.id}`);
         console.log('res', res);
     }
 
