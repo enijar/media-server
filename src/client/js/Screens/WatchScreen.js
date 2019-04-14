@@ -19,14 +19,7 @@ export default class WatchScreen extends BaseScreen {
 
     async componentDidMount() {
         const movie = (await services.api.get(`/api/movie/${this.props.match.params.id}`)).body;
-        const magnet = services.magnet.get(movie);
-
-        console.log(magnet);
-
         this.setState({movie});
-
-        const res = await services.api.get(`/api/stream/${movie.id}`);
-        console.log('res', res);
     }
 
     render() {
@@ -54,8 +47,10 @@ export default class WatchScreen extends BaseScreen {
                     </div>
                 </div>
 
-                <div className="grid">
-                    <div ref={this.player}/>
+                <div className="grid" style={{alignItems: 'flex-start'}}>
+                    <video ref={this.player} autoPlay controls style={{width: '100%'}}>
+                        <source src={`/api/stream/${this.state.movie.id}`} type="video/mp4"/>
+                    </video>
                 </div>
             </Screen>
         );
