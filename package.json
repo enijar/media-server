@@ -20,6 +20,7 @@
     "cron": "^1.7.0",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "express-basic-auth": "^1.1.6",
     "lodash": "^4.17.11",
     "magnet-to-torrent": "^1.0.7",
     "magnet-uri": "^5.2.4",
