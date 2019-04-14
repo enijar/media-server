@@ -6,10 +6,9 @@ const request = require('superagent');
 const _ = require('lodash');
 const Movie = require('../models/Movie');
 
-const BATCH_SIZE = 30;
-const FAILED_IDS = [];
-
-(async function downloadImage() {
+module.exports = async () => {
+    const BATCH_SIZE = 30;
+    const FAILED_IDS = [];
     const publicPath = path.resolve(__dirname, '..', '..', '..', 'public');
     const files = fs.readdirSync(path.join(publicPath, 'images'));
     const ids = files
@@ -57,4 +56,4 @@ const FAILED_IDS = [];
     console.log('Finished downloading images');
 
     process.exit(0);
-})();
+};

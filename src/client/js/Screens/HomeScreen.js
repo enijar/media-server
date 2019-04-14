@@ -45,7 +45,7 @@ export default class HomeScreen extends BaseScreen {
                     <div className="grid">
                         {this.state.results.items.map((result, index) => (
                             <div key={`result-${result.id}-${index}`} className="grid-item">
-                                <img src={`/images/${result.id}.jpg`} alt={result.title}/>
+                                <img src={result.img} alt={result.title}/>
                                 <p>
                                     <strong>{result.title}</strong>
                                 </p>

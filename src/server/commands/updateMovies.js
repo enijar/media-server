@@ -1,4 +1,5 @@
 require('../bootstrap');
+const Sequelize = require('sequelize');
 const fetch = require('node-fetch');
 const _ = require('lodash');
 const config = require('../../config/server');
@@ -6,15 +7,7 @@ const Movie = require('../models/Movie');
 
 // @note you will most likely need a VPN for this to run without
 // being blocked by your ISP. I suggest https://nordvpn.com
-
-const STATE = {
-    page: 1,
-    failedPages: [],
-};
-
-const WORKERS = 20;
-
-async function updateMovies(page = 1) {
+async function updateMovies(page = 1, failedPages = []) {
     const endpoint = `https://yts.am/api/v2/list_movies.json?page=${page}&limit=50`;
 
     console.log(`Fetching movies from endpoint ${endpoint}...`);
@@ -30,6 +23,7 @@ async function updateMovies(page = 1) {
             }
 
             return {
+                guid: _.get(movie, 'id', null),
                 img: _.get(movie, 'large_cover_image', '').replace('https://yts.am', config.cdnHost),
                 title: _.get(movie, 'title_english', null),
                 year: _.get(movie, 'year', null),
@@ -55,27 +49,34 @@ async function updateMovies(page = 1) {
         if (movies.length === 0) {
             console.log('Movies updated');
 
-            if (STATE.failedPages.length > 0) {
-                console.error(`Failed to fetch ${STATE.failedPages.length} pages: ${STATE.failedPages.join(',')}`);
+            if (failedPages.length > 0) {
+                console.error(`Failed to fetch ${failedPages.length} pages: ${failedPages.join(',')}`);
             }
 
-            process.exit(0);
+            return;
         }
 
-        await Movie.bulkCreate(movies);
+        const duplicateMovies = await Movie.findAll({
+            where: {
+                guid: {
+                    [Sequelize.Op.in]: movies.map(movie => movie.guid),
+                },
+            },
+        });
+        const duplicateMovieIds = duplicateMovies.map(movie => movie.guid);
+
+        // Remove duplicate films
+        await Movie.bulkCreate(movies.filter(movie => !duplicateMovieIds.includes(movie.guid)));
+
+        if (duplicateMovies.length === movies.length) {
+            return;
+        }
     } catch (err) {
-        STATE.failedPages.push(page);
+        failedPages.push(page);
         console.error(`Error fetching movies from endpoint ${endpoint}: ${err.message}`);
     }
+
+    return updateMovies(++page, failedPages);
 }
 
-(async function work() {
-    const processes = [];
-    for (let i = 0; i < WORKERS; i++) {
-        processes.push(updateMovies(STATE.page));
-        STATE.page++;
-    }
-
-    await Promise.all(processes);
-    return work();
-})();
+module.exports = () => updateMovies();

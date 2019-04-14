@@ -4,6 +4,10 @@ module.exports = class Movie extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
+                guid: {
+                    type: DataTypes.FLOAT,
+                    unique: true,
+                },
                 img: {
                     type: DataTypes.STRING,
                 },

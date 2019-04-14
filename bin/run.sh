@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+npm install
+
 if [[ "$APP_ENV" = production ]]
 then
     echo "APP_ENV build"
