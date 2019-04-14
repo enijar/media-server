@@ -9,6 +9,6 @@ then
     npm start
 else
     echo "APP_ENV watch"
-    npm run server-watch &
-    npm run watch
+    npm run watch &
+    npm run server-watch
 fi

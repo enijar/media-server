@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import get from "lodash/get";
 import AppContext from "../app/Context/App";
 import BaseScreen from "./BaseScreen";
@@ -44,14 +45,12 @@ export default class HomeScreen extends BaseScreen {
                 {get(this.state.results, 'items', []).length > 0 && (
                     <div className="grid">
                         {this.state.results.items.map((result, index) => (
-                            <div key={`result-${result.id}-${index}`} className="grid-item">
+                            <Link key={`result-${result.id}-${index}`} className="grid-item" to={`/watch/${result.id}`}>
                                 <img src={result.img} alt={result.title}/>
-                                <p>
-                                    <strong>{result.title}</strong>
-                                </p>
+                                <p><strong>{result.title}</strong></p>
                                 <p>{result.year}</p>
                                 <p>Rating: {result.rating}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 )}
