@@ -5,6 +5,7 @@ import BaseScreen from "./BaseScreen";
 import Screen from "../Components/Screen";
 import Search from "../Components/Search";
 import Pagination from "../Components/Pagination";
+import services from "../services";
 
 @AppContext
 export default class HomeScreen extends BaseScreen {
@@ -14,20 +15,31 @@ export default class HomeScreen extends BaseScreen {
         query: '',
     };
 
-    handleResults = results => {
-        results.page = results.query !== this.state.query ? 1 : results.page;
-        this.setState({results, query: results.query});
+    handlePageChange = page => {
+        if (page === this.state.page) {
+            return;
+        }
+        this.setState({page});
+        return this.search(this.state.query, page);
     };
 
-    changePage = page => this.setState({page});
+    async search(query, page) {
+        const res = await services.api.post('/api/movie/search', {query, page});
+        this.setState({results: res.body});
+    }
+
+    handleQueryChange = query => {
+        if (query.trim().length < 3 || query === this.state.query) {
+            return;
+        }
+        this.setState({query, page: 1});
+        return this.search(query, 1);
+    };
 
     render() {
         return (
             <Screen name="Home">
-                <Search
-                    onResults={this.handleResults}
-                    page={this.state.page}
-                />
+                <Search onChange={this.handleQueryChange}/>
 
                 {get(this.state.results, 'items', []).length > 0 && (
                     <div className="grid">
@@ -49,7 +61,7 @@ export default class HomeScreen extends BaseScreen {
                         <Pagination
                             page={this.state.results.page}
                             totalPages={this.state.results.totalPages}
-                            onChange={this.changePage}
+                            onChange={this.handlePageChange}
                         />
                     </div>
                 )}
