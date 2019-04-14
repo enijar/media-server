@@ -29,7 +29,7 @@ export default class HomeScreen extends BaseScreen {
     }
 
     handleQueryChange = query => {
-        if (query.trim().length < 3 || query === this.state.query) {
+        if (query.trim().length < 2 || query === this.state.query) {
             return;
         }
         this.setState({query, page: 1});
