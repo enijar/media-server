@@ -8,6 +8,7 @@ module.exports = async (req, res) => {
             limit: LIMIT,
             order: [
                 ['year', 'desc'],
+                ['rating', 'desc'],
             ],
         });
         res.send({items: results});
