@@ -1,7 +1,5 @@
 {
-  "name": "media-server",
-  "version": "1.0.0",
-  "description": "Media server for searching and streaming magnet URIs",
+  "private": true,
   "scripts": {
     "start": "node src/server",
     "server-watch": "npx nodemon --ignore src/client src/server",
@@ -13,7 +11,6 @@
     "npm": ">6.9.0",
     "node": ">11.11.0"
   },
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.3",
