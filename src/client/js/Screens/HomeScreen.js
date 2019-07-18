@@ -16,6 +16,11 @@ export default class HomeScreen extends BaseScreen {
         query: '',
     };
 
+    async componentDidMount() {
+        const res = await services.api.get('/api/movie/latest');
+        this.setState({results: res.body});
+    }
+
     handlePageChange = page => {
         if (page === this.state.page) {
             return;
@@ -38,6 +43,8 @@ export default class HomeScreen extends BaseScreen {
     };
 
     render() {
+        const totalPages = get(this.state.results, 'totalPages', 0);
+
         return (
             <Screen name="Home">
                 <Search onChange={this.handleQueryChange}/>
@@ -55,15 +62,15 @@ export default class HomeScreen extends BaseScreen {
                     </div>
                 )}
 
-                {get(this.state.results, 'totalPages', 0) > 1 && (
-                    <div className="grid">
+                <div className="grid">
+                    {totalPages > 1 && (
                         <Pagination
                             page={this.state.results.page}
-                            totalPages={this.state.results.totalPages}
+                            totalPages={totalPages}
                             onChange={this.handlePageChange}
                         />
-                    </div>
-                )}
+                    )}
+                </div>
             </Screen>
         );
     }
