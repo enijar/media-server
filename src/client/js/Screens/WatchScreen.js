@@ -22,6 +22,12 @@ export default class WatchScreen extends BaseScreen {
         this.setState({movie});
     }
 
+    fullScreen = () => {
+        if (this.player.current) {
+            return this.player.current.requestFullscreen();
+        }
+    };
+
     render() {
         if (!this.state.movie) {
             return 'Loading...';
@@ -51,6 +57,8 @@ export default class WatchScreen extends BaseScreen {
                     <video ref={this.player} autoPlay controls style={{width: '100%'}}>
                         <source src={`/api/stream/${this.state.movie.id}`} type="video/mp4"/>
                     </video>
+
+                    <button onClick={this.fullScreen}>Fullscreen</button>
                 </div>
             </Screen>
         );
