@@ -49,7 +49,7 @@ export default class WatchScreen extends BaseScreen {
                         <p>{this.state.movie.year}</p>
 
                         <p><strong>Genres</strong></p>
-                        <p>{this.state.movie.genres.join(', ')}</p>
+                        <p>{(this.state.movie.genres || []).join(', ')}</p>
                     </div>
                 </div>
 
