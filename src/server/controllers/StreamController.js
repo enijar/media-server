@@ -4,6 +4,7 @@ const Movie = require('../models/Movie');
 const services = require('../services/index');
 
 const client = new WebTorrent();
+client.uploadSpeed = 0;
 const downloadsPath = path.resolve(__dirname, '..', '..', '..', 'storage', 'downloads');
 
 const streamVideo = (torrent, req, res) => {
