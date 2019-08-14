@@ -36,6 +36,10 @@ export default class WatchScreen extends BaseScreen {
         return (
             <Screen name="Watch">
                 <div className="grid">
+                    <div>
+                        <button onClick={() => this.props.history.push('/')}>&lt;Back</button>
+                    </div>
+
                     <div className="grid-item" style={{
                         width: '100%',
                         textAlign: 'left',
