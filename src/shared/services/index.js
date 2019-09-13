@@ -1,4 +1,4 @@
 module.exports = {
-    api: require('./api'),
-    magnet: require('./magnet'),
+  api: require('./api'),
+  magnet: require('./magnet'),
 };

@@ -12,5 +12,5 @@ app.use(bodyParser.urlencoded({extended: true}));
 require('./routes')(app);
 
 app.listen(3000, () => {
-    console.log(`Running http://localhost:3000`);
+  console.log(`Running http://localhost:3000`);
 });
