@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [[ "$APP_ENV" = "development" ]]
+then
+    npm run server-watch
+else
+    npm start
+fi

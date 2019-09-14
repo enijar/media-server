@@ -2,11 +2,12 @@ require('../bootstrap');
 const rimraf = require('rimraf');
 const fs = require('fs');
 const path = require('path');
+const config = require('../../config/server');
 
 const WEEK_IN_MS = 1000 * 60 * 60 * 24 * 7;
 
 function cleanOldFiles () {
-  const downloadsPath = path.resolve(__dirname, '..', '..', '..', 'storage', 'downloads');
+  const downloadsPath = path.join(config.paths.storage, 'downloads');
   const files = fs.readdirSync(downloadsPath);
   const now = Date.now();
 

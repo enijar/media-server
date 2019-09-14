@@ -1,9 +1,11 @@
 const path = require('path');
-require('dotenv').config({path: path.resolve(__dirname, '..', '..', '.env')});
+const BASE_PATH = path.resolve(__dirname, '..', '..');
+require('dotenv').config({path: path.join(BASE_PATH, '.env')});
 const common = require('./common');
 
 module.exports = {
   ...common,
+  port: 3000,
   endpoints: [
     'https://thepiratebay.org/search/{query}/0/99/0',
   ],
@@ -17,4 +19,9 @@ module.exports = {
   },
   cdnHost: 'https://img.yts.am',
   scraperInterval: 5000,
+  paths: {
+    base: BASE_PATH,
+    build: path.join(BASE_PATH, 'build'),
+    storage: path.join(BASE_PATH, 'storage'),
+  },
 };

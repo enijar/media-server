@@ -2,10 +2,11 @@ const path = require('path');
 const WebTorrent = require('webtorrent');
 const Movie = require('../models/Movie');
 const services = require('../services/index');
+const config = require('../../config/server');
 
 const client = new WebTorrent();
 client.uploadSpeed = 0;
-const downloadsPath = path.resolve(__dirname, '..', '..', '..', 'storage', 'downloads');
+const downloadsPath = path.join(config.paths.storage, 'downloads');
 
 const streamVideo = (torrent, req, res) => {
   const file = torrent.files.find(file => file.name.endsWith('.mp4'));

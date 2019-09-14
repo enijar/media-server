@@ -1,88 +1,85 @@
 const path = require('path');
-const WebpackNotifierPlugin = require('webpack-notifier');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
 
-const postCSSLoaderPlugins = [
-  require('autoprefixer')({
-    browsers: [
-      '> 0.3%',
-      'last 7 versions',
-      'Android >= 4',
-      'Firefox >= 20',
-      'iOS >= 8',
-    ],
-    flexbox: true,
+const ENV = process.argv[process.argv.length - 1] || 'production';
+const SRC_DIR = path.resolve(__dirname, 'src', 'client');
+const BUILD_DIR = path.resolve(__dirname, 'build');
+
+const plugins = [
+  new CopyPlugin([{
+    from: path.join(SRC_DIR, 'assets'),
+    to: path.join(BUILD_DIR, 'assets'),
+  }]),
+  new MiniCssExtractPlugin({
+    filename: 'index.css',
+    path: BUILD_DIR,
   }),
+  new HtmlWebpackPlugin({
+    template: path.join(SRC_DIR, 'index.html'),
+    minify: ENV === 'development' ? false : {
+      collapseWhitespace: true,
+      removeComments: true,
+      removeRedundantAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      useShortDoctype: true,
+    },
+  }),
+  new CleanObsoleteChunks(),
 ];
 
-if (process.argv[process.argv.length - 1] === 'production') {
-  postCSSLoaderPlugins.push(require('cssnano')({preset: 'default'}));
+if (ENV === 'production') {
+  plugins.push(new OptimizeCssAssetsPlugin({
+    cssProcessor: require('cssnano'),
+    cssProcessorPluginOptions: {
+      preset: ['default', {discardComments: {removeAll: true}}],
+    },
+  }));
 }
 
 module.exports = {
   target: 'web',
-  node: {
-    fs: 'empty',
+  mode: ENV,
+  devtool: 'source-map',
+  devServer: {
+    port: process.env.DEV_SERVER_PORT || 8081,
+    host: '0.0.0.0',
+    open: false,
+    writeToDisk: true,
+    proxy: {
+      '/': 'http://nginx',
+    },
   },
   entry: [
-    path.resolve(__dirname, 'src', 'client', 'js', 'app.js'),
-    path.resolve(__dirname, 'src', 'client', 'sass', 'app.scss'),
+    path.join(SRC_DIR, 'index.js'),
+    path.join(SRC_DIR, 'index.scss'),
   ],
   output: {
-    filename: 'app.js',
-    chunkFilename: `[id].[chunkhash].js`,
-    path: path.resolve(__dirname, 'public', 'dist'),
-    publicPath: '/dist/',
-  },
-  optimization: {
-    usedExports: true,
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      automaticNameDelimiter: '~',
-      name: true,
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-      },
-    },
+    filename: 'index.js',
+    chunkFilename: `[name].[chunkhash].js`,
+    path: BUILD_DIR,
+    publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.(sass|scss)$/,
+        test: /\.scss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                url: false,
-                importLoaders: 1,
-              },
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => postCSSLoaderPlugins,
-              },
-            },
-            {
-              loader: 'sass-loader',
-            },
-          ],
-        }),
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
       {
         test: /\.js$/,
@@ -90,20 +87,14 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.png$/,
-        loader: 'file-loader',
+        test: /\.(png|jpg|svg|gif|mp4|woff|woff2)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
     ],
   },
-  plugins: [
-    new WebpackNotifierPlugin({
-      alwaysNotify: process.argv[process.argv.length - 1] === 'development',
-      skipFirstNotification: process.argv[process.argv.length - 1] === 'production',
-    }),
-    new ExtractTextPlugin({
-      filename: 'app.css',
-      allChunks: true,
-    }),
-  ],
-  devtool: 'source-map',
+  plugins,
 };

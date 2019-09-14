@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+video, img {
+  object-fit: cover;
+}
+
+html, body, #root-app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+html {
+  font-family: $font-family;
+  font-size: $root-size;
+  line-height: 1.5;
+}
