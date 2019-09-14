@@ -18,7 +18,7 @@ module.exports = class Movie extends Sequelize.Model {
           type: DataTypes.FLOAT,
         },
         rating: {
-          type: DataTypes.STRING,
+          type: DataTypes.FLOAT,
         },
         genres: {
           type: DataTypes.JSON,
@@ -36,7 +36,7 @@ module.exports = class Movie extends Sequelize.Model {
           type: DataTypes.STRING,
         },
         runtime: {
-          type: DataTypes.STRING,
+          type: DataTypes.FLOAT,
         },
         certificate: {
           type: DataTypes.STRING,

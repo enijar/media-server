@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import get from "lodash/get";
 import BaseScreen from "./BaseScreen";
 import Screen from "../components/Screen";
@@ -7,6 +6,8 @@ import Search from "../components/Search";
 import Pagination from "../components/Pagination";
 import services from "../services";
 import { AppContext } from "../context/AppContext";
+import Preview from "../components/Preview";
+import PreviewList from "../components/PreviewList";
 
 @AppContext
 export default class LandingScreen extends BaseScreen {
@@ -49,28 +50,19 @@ export default class LandingScreen extends BaseScreen {
       <Screen name="Landing">
         <Search onChange={this.#handleQueryChange}/>
 
-        {get(this.state.results, 'items', []).length > 0 && (
-          <div className="grid">
-            {this.state.results.items.map((result, index) => (
-              <Link key={`result-${result.id}-${index}`} className="grid-item" to={`/watch/${result.id}`}>
-                <img src={result.img} alt={result.title}/>
-                <p><strong>{result.title}</strong></p>
-                <p>{result.year}</p>
-                <p>Rating: {result.rating}</p>
-              </Link>
-            ))}
-          </div>
-        )}
+        <PreviewList>
+          {get(this.state.results, 'items', []).map(item => (
+            <Preview key={`preview.${item.id}`} {...item}/>
+          ))}
+        </PreviewList>
 
-        <div className="grid">
-          {totalPages > 1 && (
-            <Pagination
-              page={this.state.results.page}
-              totalPages={totalPages}
-              onChange={this.#handlePageChange}
-            />
-          )}
-        </div>
+        {totalPages > 1 && (
+          <Pagination
+            page={this.state.results.page}
+            totalPages={totalPages}
+            onChange={this.#handlePageChange}
+          />
+        )}
       </Screen>
     );
   }

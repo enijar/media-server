@@ -1,6 +1,6 @@
 const Movie = require('../models/Movie');
 
-const LIMIT = 20;
+const LIMIT = 50;
 
 module.exports = async (req, res) => {
   try {
