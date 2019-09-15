@@ -8,3 +8,11 @@
     #{$attr}: $max-attr;
   }
 }
+
+@mixin animation($name, $settings) {
+  animation: $name $settings;
+
+  @keyframes #{$name} {
+    @content
+  }
+}

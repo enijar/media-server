@@ -10,15 +10,47 @@ export default class Preview extends Component {
     img: PropTypes.string.isRequired,
   };
 
+  state = {
+    open: this.props.title === 'Hoax',
+  };
+
+  #open = () => {
+    !this.state.open && this.setState({open: true});
+  };
+
+  #close = () => {
+    this.state.open && this.setState({open: false});
+  };
+
   render () {
     return (
-      <div className="Preview">
-        <div
-          className="Preview__poster"
-          style={{backgroundImage: `url(${this.props.img})`}}
-        />
-        <div className="Preview__title" title={this.props.title}>{this.props.title}</div>
-        <div className="Preview__year">{this.props.year}</div>
+      <div
+        className={`Preview ${this.state.open ? 'Preview--open' : ''}`}
+        title={this.state.open ? undefined : this.props.title}
+        onClick={this.#open}
+      >
+        {!this.state.open && (
+          <>
+            <div
+              className="Preview__poster"
+              style={{backgroundImage: `url(${this.props.img})`}}
+            >
+              <div className="Preview__rating">
+                {this.props.rating}/10
+              </div>
+            </div>
+            <div className="Preview__title">{this.props.title}</div>
+            <div className="Preview__year">{this.props.year}</div>
+          </>
+        )}
+
+        {this.state.open && (
+          <>
+            <div className="Preview__close" onClick={this.#close}>
+              &times;
+            </div>
+          </>
+        )}
       </div>
     );
   }
