@@ -8,23 +8,6 @@
   padding: 1em;
   cursor: pointer;
 
-  &--open {
-    position: absolute;
-    cursor: default;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: $color-black;
-    z-index: $preview-open-z-index;
-
-    .Preview {
-      &__poster {
-        background-image: none;
-      }
-    }
-  }
-
   &__close {
     @include fluid-attr("font-size", 28px, 58px);
     position: absolute;
@@ -90,5 +73,38 @@
   &__year {
     @include fluid-attr("font-size", 8px, 12px);
     color: $color-gray;
+  }
+
+  &__overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    $aspectRatio: 500 / 750;
+    $height: 85vh;
+
+    &-img {
+      height: $height;
+      width: $height * $aspectRatio;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50%;
+    }
+
+    &-info {
+      height: $height;
+      max-width: 530px;
+      padding-left: 2em;
+      padding-right: 2em;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+
+      &-title {
+        font-size: 2rem;
+        margin-bottom: 0.25em;
+        font-weight: bold;
+      }
+    }
   }
 }
