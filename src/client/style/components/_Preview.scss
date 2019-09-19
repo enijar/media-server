@@ -110,5 +110,13 @@
     &-actions {
       margin-top: 1em;
     }
+
+    &-video {
+      max-width: 100%;
+
+      video {
+        width: 100%;
+      }
+    }
   }
 }

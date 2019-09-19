@@ -43,6 +43,9 @@ if (ENV === 'production') {
 
 module.exports = {
   target: 'web',
+  node: {
+    fs: 'empty',
+  },
   mode: ENV,
   devtool: 'source-map',
   devServer: {

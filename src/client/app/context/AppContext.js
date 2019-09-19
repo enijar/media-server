@@ -1,4 +1,5 @@
 import React, { Component, createContext } from "react";
+import WebTorrent from "webtorrent";
 
 const Context = createContext({});
 
@@ -10,11 +11,15 @@ export const AppContext = Component => props => (
 
 export default class AppContextProvider extends Component {
   state = {
-    //
+    torrentClient: new WebTorrent,
+    torrentId: null,
   };
+
+  #setTorrentId = torrentId => this.setState({torrentId});
 
   #getContext = () => ({
     ...this.state,
+    setTorrentId: this.#setTorrentId,
   });
 
   render () {
