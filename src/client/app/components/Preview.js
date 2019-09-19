@@ -4,6 +4,7 @@ import { AppContext } from "../context/AppContext";
 import Services from "../services/index";
 import Overlay from "./Overlay";
 import Button from "./Button";
+import Loading from "./Loading";
 
 @AppContext
 export default class Preview extends Component {
@@ -23,7 +24,10 @@ export default class Preview extends Component {
   };
 
   #toggleOverlay = overlayOpen => () => {
-    !overlayOpen && this.props.app.torrentClient.remove(torrentId);
+    if (this.props.app.torrentId !== null && !overlayOpen) {
+      this.props.app.torrentClient.remove(this.props.app.torrentId);
+      this.props.app.setTorrentId(null);
+    }
     this.setState({overlayOpen});
   };
 
@@ -36,7 +40,6 @@ export default class Preview extends Component {
 
     const torrentId = Services.magnet.get(this.props);
 
-    // Add new torrent
     this.props.app.setTorrentId(torrentId);
     this.props.app.torrentClient.add(torrentId, torrent => {
       const file = torrent.files.find(file => file.name.endsWith('.mp4'));
@@ -80,7 +83,9 @@ export default class Preview extends Component {
               ref={this.#video}
               className="Preview__overlay-video"
               style={{display: this.props.app.torrentId ? 'block' : 'none'}}
-            />
+            >
+              <Loading/>
+            </div>
           </div>
         </Overlay>
       </>
