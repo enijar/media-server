@@ -21,12 +21,14 @@ export default class Preview extends Component {
 
   state = {
     overlayOpen: false,
+    torrentReady: false,
   };
 
   #toggleOverlay = overlayOpen => () => {
     if (this.props.app.torrentId !== null && !overlayOpen) {
       this.props.app.torrentClient.remove(this.props.app.torrentId);
       this.props.app.setTorrentId(null);
+      this.setState({torrentReady: false});
     }
     this.setState({overlayOpen});
   };
@@ -41,8 +43,9 @@ export default class Preview extends Component {
     const torrentId = Services.magnet.get(this.props);
 
     this.props.app.setTorrentId(torrentId);
-    this.props.app.torrentClient.add(torrentId, torrent => {
+    this.props.app.torrentClient.add(torrentId, async torrent => {
       const file = torrent.files.find(file => file.name.endsWith('.mp4'));
+      await this.setState({torrentReady: true});
       file.appendTo(this.#video.current, {autoplay: true});
     });
   };
@@ -84,7 +87,7 @@ export default class Preview extends Component {
               className="Preview__overlay-video"
               style={{display: this.props.app.torrentId ? 'block' : 'none'}}
             >
-              <Loading/>
+              {!this.state.torrentReady && <Loading/>}
             </div>
           </div>
         </Overlay>

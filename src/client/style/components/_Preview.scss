@@ -27,6 +27,7 @@
     border-radius: 0.3em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: rgba(0, 0, 0, 0.3);
+
     @include animation(loading, 1.5s infinite) {
       0%, 100% {
         background-color: rgba(0, 0, 0, 0.3);
@@ -76,12 +77,20 @@
   }
 
   &__overlay {
+    $aspectRatio: 500 / 750;
+    $height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    $aspectRatio: 500 / 750;
-    $height: 85vh;
+
+    .Loading {
+      color: $color-white;
+
+      &:before, &:after {
+        background: $color-black;
+      }
+    }
 
     &-img {
       height: $height;
