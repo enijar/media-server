@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { AppContext } from "../context/AppContext";
 import Overlay from "./Overlay";
+import Button from "./Button";
 
 @AppContext
 export default class Preview extends Component {
@@ -19,6 +20,10 @@ export default class Preview extends Component {
   };
 
   #toggleOverlay = overlayOpen => () => this.setState({overlayOpen});
+
+  #play = () => {
+    console.log('play');
+  };
 
   render () {
     return (
@@ -40,6 +45,11 @@ export default class Preview extends Component {
               </div>
               <div className="Preview__overlay-info-synopsis">
                 {this.props.synopsis}
+              </div>
+              <div className="Preview__overlay-actions">
+                <Button onClick={this.#play}>
+                  Watch Now
+                </Button>
               </div>
             </div>
           </div>

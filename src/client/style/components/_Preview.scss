@@ -92,11 +92,11 @@
     }
 
     &-info {
+      font-size: 0.9rem;
       height: $height;
       max-width: 530px;
       padding-left: 2em;
       padding-right: 2em;
-      font-size: 0.9rem;
       display: flex;
       flex-direction: column;
 
@@ -105,6 +105,10 @@
         margin-bottom: 0.25em;
         font-weight: bold;
       }
+    }
+
+    &-actions {
+      margin-top: 1em;
     }
   }
 }
