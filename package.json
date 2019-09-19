@@ -25,8 +25,7 @@
     "sequelize": "^5.3.1",
     "superagent": "^5.0.0",
     "torrent-search-api": "^2.0.6",
-    "webtorrent": "^0.103.1",
-    "webtorrent-cli": "^1.12.3"
+    "webtorrent": "^0.107.16"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
