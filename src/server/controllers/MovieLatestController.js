@@ -1,11 +1,16 @@
+const {Op} = require('sequelize');
+const config = require('../../config/server');
 const Movie = require('../models/Movie');
-
-const LIMIT = 50;
 
 module.exports = async (req, res) => {
   try {
     const results = await Movie.findAll({
-      limit: LIMIT,
+      limit: config.resultsLimit,
+      where: {
+        runtime: {
+          [Op.gt]: 0,
+        }
+      },
       order: [
         ['year', 'desc'],
         ['rating', 'desc'],
