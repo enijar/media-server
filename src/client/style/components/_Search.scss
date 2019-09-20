@@ -1,0 +1,18 @@
+.Search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+
+  input {
+    font-size: 1em;
+    padding: 0.5em 1em;
+    border: none;
+    background-color: lighten($color-black, 5%);
+    color: $color-white;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
