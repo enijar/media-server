@@ -13,6 +13,7 @@ module.exports = async (req, res) => {
       },
       order: [
         ['year', 'desc'],
+        ['uploaded_at', 'desc'],
         ['rating', 'desc'],
       ],
     });
