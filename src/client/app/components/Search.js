@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 export default class Search extends Component {
   static propTypes = {
+    onSubmit: PropTypes.func,
     onChange: PropTypes.func,
   };
 
@@ -11,13 +12,19 @@ export default class Search extends Component {
   };
 
   #handleChange = event => {
-    this.setState({query: event.target.value});
-    this.props.onChange && this.props.onChange(event.target.value);
+    const query = event.target.value;
+    this.setState({query});
+    this.props.onChange && this.props.onChange(query);
+  };
+
+  #handleSubmit = event => {
+    event.preventDefault();
+    this.props.onSubmit && this.props.onSubmit(this.state.query);
   };
 
   render () {
     return (
-      <div className="Search">
+      <form className="Search" onSubmit={this.#handleSubmit}>
         <input
           type="text"
           name="query"
@@ -25,7 +32,7 @@ export default class Search extends Component {
           onChange={this.#handleChange}
           placeholder="Enter a movie title..."
         />
-      </div>
+      </form>
     );
   }
 }
