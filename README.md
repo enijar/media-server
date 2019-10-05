@@ -35,7 +35,7 @@ Set `APP_ENV` to `production` in .env file.
 Start [Docker](https://docs.docker.com/install/) container.
 
 ```shell script
-./bin/build
+./bin/containers-build
 ```
 
 Setup NGINX on the server to `proxy_pass` port 80 through to the app's port.
