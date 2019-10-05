@@ -13,4 +13,7 @@ require('./routes')(app);
 
 app.listen(config.port, () => {
   console.log(`Running http://localhost:${config.port}`);
+  process.on('uncaughtException', err => {
+    console.error(err.message);
+  });
 });
