@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-npm install --no-progress --ignore-optional
-
 if [[ "$APP_ENV" = "development" ]]
 then
     npm run watch
