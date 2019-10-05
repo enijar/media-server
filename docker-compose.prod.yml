@@ -23,6 +23,17 @@ services:
       - /var/www/node_modules
     command: ./bin/server
 
+  cron:
+    build:
+      context: ./
+      dockerfile: docker/cron/Dockerfile
+    volumes:
+      - ./:/var/www
+      - /var/www/node_modules
+    command: ./bin/cron
+    depends_on:
+      - server
+
   nginx:
     image: 'nginx:latest'
     volumes:
