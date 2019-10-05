@@ -7,12 +7,13 @@
   input {
     font-size: 1em;
     padding: 0.5em 1em;
-    border: none;
     background-color: lighten($color-black, 5%);
+    border: 2px solid darken($color-black, 5%);
     color: $color-white;
 
     &:focus {
       outline: none;
+      border: 2px solid lighten($color-black, 20%);
     }
   }
 }

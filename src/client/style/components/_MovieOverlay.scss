@@ -1,0 +1,88 @@
+.MovieOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: $z-index-overlay;
+  background-color: $color-black;
+  color: #fff;
+
+  &__click-catcher {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__close {
+    position: absolute;
+    font-size: 3rem;
+    line-height: 0;
+    top: 0.8em;
+    right: 0.5em;
+    cursor: pointer;
+  }
+
+  &__content {
+    position: relative;
+    padding: 1em;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__movie {
+    $aspectRatio: 500 / 750;
+    $height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .Loading {
+      color: $color-white;
+
+      &:before, &:after {
+        background: $color-black;
+      }
+    }
+
+    &-img {
+      height: $height;
+      width: $height * $aspectRatio;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50%;
+    }
+
+    &-info {
+      font-size: 0.9rem;
+      height: $height;
+      max-width: 530px;
+      padding-left: 2em;
+      padding-right: 2em;
+      display: flex;
+      flex-direction: column;
+
+      &-title {
+        font-size: 2rem;
+        margin-bottom: 0.25em;
+        font-weight: bold;
+      }
+    }
+
+    &-actions {
+      margin-top: 1em;
+    }
+
+    &-video {
+      max-width: 100%;
+
+      video {
+        width: 100%;
+      }
+    }
+  }
+}

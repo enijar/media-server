@@ -19,6 +19,7 @@
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.3.0",
+    "peerflix-server": "^0.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
@@ -26,6 +27,7 @@
     "sequelize": "^5.3.1",
     "superagent": "^5.0.0",
     "torrent-search-api": "^2.0.6",
+    "torrent-stream": "^1.1.0",
     "webtorrent": "^0.107.16"
   },
   "devDependencies": {
