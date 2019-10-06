@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
       limit: config.resultsLimit,
       where: {
         year: {
-          [Op.eq]: moment().format('YYYY'),
+          [Op.gte]: parseInt(moment().format('YYYY')) - 1,
         },
         runtime: {
           [Op.gt]: 0,
