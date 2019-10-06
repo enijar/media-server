@@ -24,5 +24,5 @@ module.exports = {
     build: path.join(BASE_PATH, 'build'),
     storage: path.join(BASE_PATH, 'storage'),
   },
-  resultsLimit: 7 * 10,
+  resultsLimit: 7 * 20,
 };
