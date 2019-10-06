@@ -73,7 +73,7 @@ export default class MovieOverlay extends Component {
           <div className="MovieOverlay__movie">
             {!this.state.playVideo && (
               <>
-                <div className="MovieOverlay__movie-img" style={{backgroundImage: `url(${this.props.movie.img})`}}/>
+                <div className="MovieOverlay__movie-img" style={{backgroundImage: `url(/api/movie/${this.props.movie.id}/image)`}}/>
                 <div className="MovieOverlay__movie-info">
                   <div className="MovieOverlay__movie-info-title">
                     {this.props.movie.title}
