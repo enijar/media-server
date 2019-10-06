@@ -23,6 +23,7 @@
     top: 0.8em;
     right: 0.5em;
     cursor: pointer;
+    z-index: $z-index-overlay-close;
   }
 
   &__content {
