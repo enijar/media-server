@@ -24,7 +24,7 @@ export default class Preview extends Component {
     return (
       <>
         <div className="Preview" title={this.props.movie.title} onClick={this.#openOverlay}>
-          <div className="Preview__poster" style={{backgroundImage: `url(${this.props.movie.img})`}}>
+          <div className="Preview__poster" style={{backgroundImage: `url(/api/movie/${this.props.movie.id}/image)`}}>
             <div className="Preview__rating">{this.props.movie.rating}/10</div>
           </div>
           <div className="Preview__title">{this.props.movie.title}</div>
