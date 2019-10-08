@@ -22,6 +22,7 @@ services:
       - ./:/var/www
       - /var/www/node_modules
     command: ./bin/server
+    restart: on-failure
 
   cron:
     build:
@@ -33,6 +34,7 @@ services:
     command: ./bin/cron
     depends_on:
       - server
+    restart: on-failure
 
   nginx:
     image: 'nginx:latest'
@@ -44,3 +46,4 @@ services:
     depends_on:
       - client
       - server
+    restart: on-failure
