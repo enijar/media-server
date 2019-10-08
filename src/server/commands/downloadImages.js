@@ -1,7 +1,6 @@
 require('../bootstrap');
 const path = require('path');
 const fs = require('fs');
-const Sequelize = require('sequelize');
 const download = require('image-downloader');
 const _ = require('lodash');
 const config = require('../../config/server');
@@ -12,7 +11,7 @@ const DOWNLOAD_PATH = path.join(config.paths.storage, 'movie-images');
 
 // @note you will most likely need a VPN for this to run without
 // being blocked by your ISP. I suggest https://nordvpn.com
-(async function downloadImages () {
+module.exports = async function downloadImages () {
   try {
     const movies = await Movie.findAll();
     const movieChunks = _.chunk(movies, CHUNK_SIZE);
@@ -47,6 +46,4 @@ const DOWNLOAD_PATH = path.join(config.paths.storage, 'movie-images');
   } catch (err) {
     console.error(err.message);
   }
-})();
-
-// module.exports = () => downloadImages();
+};
