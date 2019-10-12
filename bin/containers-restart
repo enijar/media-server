@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-docker image prune
-docker-compose -f docker-compose.prod.yml build
-docker-compose -f docker-compose.prod.yml restart

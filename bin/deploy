@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+ssh ssh ubuntu@51.77.119.205 -T <<EOF
+  cd /var/www/envjames.com
+  printf "Pulling latest from master...\n"
+  git stash
+  git pull
+  git stash clear
+  printf "Rebuilding services...\n"
+  docker image prune -f
+  docker network prune -f
+  docker volume prune -f
+  docker-compose -f docker-compose.prod.yml build
+  docker-compose -f docker-compose.prod.yml restart
+  exit
+EOF
