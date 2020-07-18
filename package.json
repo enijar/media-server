@@ -12,7 +12,7 @@
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "image-downloader": "^3.5.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "magnet-uri": "^5.2.4",
     "moment": "^2.24.0",
     "mysql2": "^1.6.5",
