@@ -14,7 +14,7 @@
     "image-downloader": "^3.5.0",
     "lodash": "^4.17.11",
     "magnet-uri": "^5.2.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.3.0",
     "peerflix-server": "^0.5.0",
